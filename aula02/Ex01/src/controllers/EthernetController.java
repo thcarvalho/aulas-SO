@@ -9,10 +9,10 @@ public class EthernetController {
   public void ip(String so) {
     String command;
 
-    if (so == "Linux") {
-      command = "ifconfig";
-    } else {
+    if (so.contains("Windows")) {
       command = "ipconfig";
+    } else {
+      command = "ifconfig";
     }
 
     try {
@@ -33,6 +33,10 @@ public class EthernetController {
             }
           }
         }
+        if (lines[i].toString().contains("mtu")) {
+          System.out.println(lines[i].toString());
+          System.out.println(lines[i+1].toString());
+        }
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -42,10 +46,10 @@ public class EthernetController {
   public void ping(String so) {
     String command;
 
-    if (so == "Linux") {
-      command = "ping -4 -c 10 www.google.com.br";
-    } else {
+    if (so.contains("Windows")) {
       command = "ping -4 -n 10 www.google.com.br";
+    } else {
+      command = "ping -4 -c 10 www.google.com.br";
     }
 
     try {
@@ -55,7 +59,7 @@ public class EthernetController {
       BufferedReader buffer = new BufferedReader(reader);
 
       Object[] lines = buffer.lines().toArray();
-      String[] ms = lines[lines.length - 1].toString().split(",");
+      String[] ms = lines[so.contains("Windows") ? lines.length - 1 : lines.length - 2].toString().split(",");
 
       System.out.println(ms[ms.length - 1]);
 

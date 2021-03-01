@@ -13,10 +13,10 @@ public class TasksController {
 
   public static void listTasks(String so) {
     String command;
-    if (so == "linux") {
-      command = "ps -ef";
-    } else {
+    if (so.contains("Windows")) {
       command = "TASKLIST /FO TABLE";
+    } else {
+      command = "ps -ef";
     }
 
     try {
@@ -38,10 +38,10 @@ public class TasksController {
 
   public static void killProcessByPID(String so, int PID) {
     String command;
-    if (so == "linux") {
-      command = "kill -9 " + PID;
-    } else {
+    if (so.contains("Windows")) {
       command = "TASKKILL /PID " + PID;
+    } else {
+      command = "kill -9 " + PID;
     }
 
     try {
